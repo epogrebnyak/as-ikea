@@ -5,19 +5,25 @@ As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 
 import random
 
-
-def substitute(letter: str) -> str:
-    """
-    Change 'a', 'o', 'u', 'e' to alternated variants.
-    """
-    mapper = dict(
+# EP: note this is a very rich mapper, will convert every letter to
+# something Swedish, this may not be the result you want as
+# some names look cool with just one accented letter, n tmany letters like this.
+mapper = dict(
         a=["à", "á", "â", "ä", "æ", "ã", "ā"],
         o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
         u=["û", "ü", "ù", "ú", "ū"],
         e=["è", "é", "ê", "ë", "ē", "ė"],
     )
+
+
+def substitute(letter: str, mapper: dict = mapper) -> str:
+    """
+    Change 'a', 'o', 'u', 'e' to alternated variants randomly.
+    """
     return random.choice(mapper[letter])
 
+def reverse(s):
+    return s[::-1]
 
 def as_ikea(name: str) -> str:
     """
@@ -29,17 +35,21 @@ def as_ikea(name: str) -> str:
             name = replace_once(name, new_letter, index)
         except KeyError:
             pass
-    return name[::-1].title()
+    return reverse(name).title()
 
 
 def replace_once(string: str, new_letter: str, index: int) -> str:
     """
-    Insert *new_letter* at position *i* in *string*.
+    Insert *new_letter* at position *index* in *string*.
     """
     return string[:index] + new_letter + string[index + 1 :]
 
-
-# assert as_ikea("Ivanov") == 'Vönävi'
+# may convert this to test
+ikea_name = as_ikea("Abelev")
+assert ikea_name.startswith("V")
+assert ikea_name[2] == "l" 
+assert ikea_name[-1] in mapper["a"]
+assert ikea_name[1] in mapper["e"]
 
 if __name__ == "__main__":
     print(as_ikea("Abelev"))
