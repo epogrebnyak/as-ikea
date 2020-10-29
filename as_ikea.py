@@ -21,8 +21,12 @@ assert as_ikea("Ivanov") == 'Vönävi' #fails
 #  - what about "å"?
 #  - does code need more refactoring?
 
-# Possible more serious questions:
+# Possible more serious applications:
 #  - how we can get real array of Ikea products?
 #  - can we make a properly sounding generative model for the products?
 #  - does product naming affect market success? See eg https://www.esic.edu/documentos/revistas/esicmk/1574698527_I.pdf
 #  - is there A/B test evidence for this that?
+
+# Ideas on implementation:
+#  - FastAPI for API
+#  - something like Heroku for quick launch as a web service?
