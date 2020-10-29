@@ -9,11 +9,11 @@ import random
 # something Swedish, this may not be the result you want as
 # some names look cool with just one accented letter, n tmany letters like this.
 mapper = dict(
-        a=["à", "á", "â", "ä", "æ", "ã", "ā"],
-        o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
-        u=["û", "ü", "ù", "ú", "ū"],
-        e=["è", "é", "ê", "ë", "ē", "ė"],
-    )
+    a=["à", "á", "â", "ä", "æ", "ã", "ā"],
+    o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
+    u=["û", "ü", "ù", "ú", "ū"],
+    e=["è", "é", "ê", "ë", "ē", "ė"],
+)
 
 
 def substitute(letter: str, mapper: dict = mapper) -> str:
@@ -22,8 +22,10 @@ def substitute(letter: str, mapper: dict = mapper) -> str:
     """
     return random.choice(mapper[letter])
 
+
 def reverse(s):
     return s[::-1]
+
 
 def as_ikea(name: str) -> str:
     """
@@ -43,13 +45,6 @@ def replace_once(string: str, new_letter: str, index: int) -> str:
     Insert *new_letter* at position *index* in *string*.
     """
     return string[:index] + new_letter + string[index + 1 :]
-
-# may convert this to test
-ikea_name = as_ikea("Abelev")
-assert ikea_name.startswith("V")
-assert ikea_name[2] == "l" 
-assert ikea_name[-1] in mapper["a"]
-assert ikea_name[1] in mapper["e"]
 
 if __name__ == "__main__":
     print(as_ikea("Abelev"))
