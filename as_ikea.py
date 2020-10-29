@@ -1,4 +1,4 @@
-"""Make your last name sound as an Ikea product.
+"""Make your last name sound as an Ikea product name.
 
 As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 """
@@ -7,53 +7,46 @@ import random
 
 
 def substitute(letter: str) -> str:
-    mapper = dict(a=["à", "á", "â", "ä", "æ", "ã", "ā"],
-                  o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
-                  u=["û", "ü", "ù", "ú", "ū"],
-                  e=["è", "é", "ê", "ë", "ē", "ė"])
+    """
+    Change 'a', 'o', 'u', 'e' to alternated variants.
+    """
+    mapper = dict(
+        a=["à", "á", "â", "ä", "æ", "ã", "ā"],
+        o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
+        u=["û", "ü", "ù", "ú", "ū"],
+        e=["è", "é", "ê", "ë", "ē", "ė"],
+    )
     return random.choice(mapper[letter])
-    
+
 
 def as_ikea(name: str) -> str:
     """
-    Convert letters to ikea letters
-    :param: string
-    :return: ikea string
+    Convert *name* to Ikea-like name.
     """
     for index, letter in enumerate(name.lower(), start=0):
-       try:
-          new_letter = substitute(letter) 
-          name = replacer(name, new_letter, index)
-       except KeyError:
-          pass 
-           
-
+        try:
+            new_letter = substitute(letter)
+            name = replace_once(name, new_letter, index)
+        except KeyError:
+            pass
     return name[::-1].title()
 
 
-def replacer(s: str, newstring: str, index: int, nofail: bool = False) -> str:
+def replace_once(string: str, new_letter: str, index: int) -> str:
     """
-    String replacer at certain index
-    :param: string, new string, index
-    :return: new string
+    Insert *new_letter* at position *i* in *string*.
     """
-    # raise an error if index is outside of the string
-    if not nofail and index not in range(len(s)):
-        raise ValueError("index outside given string")
-
-    # insert the new string between "slices" of the original
-    return s[:index] + newstring + s[index + 1:]
+    return string[:index] + new_letter + string[index + 1 :]
 
 
 # assert as_ikea("Ivanov") == 'Vönävi'
 
 if __name__ == "__main__":
-    print(as_ikea('Abelev'))
-    
+    print(as_ikea("Abelev"))
+
 # Change next:
 #  - can you write a pseudocode for this procedure?
 #  - add more tests that fail
-#  - use proper capitalisation with .lower() and .capitalize()   
 #  - should there be just one letter change?
 #  - inquire about "Umalut". Is our substitute algorith ok?
 #    https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
