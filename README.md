@@ -2,7 +2,9 @@
 Convert your name to Ikea product name
 
 ```python
-pint(as_ikea("Abelev"))
+from as_ikea import as_ikea
+
+print(as_ikea("Abelev"))
 >>> 'Vélébá'
 ```
 
