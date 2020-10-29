@@ -2,11 +2,8 @@
 Convert your name to Ikea product name
 
 ```python
-def as_ikea(name: str) -> str:
-    mapper = dict(a="ä", o="ö", u="ü")
-    for letter in mapper.keys():
-       name = name.replace(letter, mapper[letter])
-    return name[::-1]
+pint(as_ikea("Abelev"))
+>>> 'Vélébá'
 ```
 
 See code source and discussion [here](as_ikea.py).
