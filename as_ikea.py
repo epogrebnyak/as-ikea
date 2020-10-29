@@ -9,7 +9,7 @@ def as_ikea(name: str) -> str:
        name = name.replace(letter, mapper[letter])
     return name[::-1]
 
-assert as_ikea("Ivanov") == 'Vönävi' #fails
+assert as_ikea("Ivanov") == 'Vönävi' #fails - add .lower() and .capitalize()
 
 # Change next:
 #  - can you write a pseudocode for this procedure?
