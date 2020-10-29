@@ -11,7 +11,7 @@ from typing import List
 # some names look cool with just one accented letter, not many letters
 # like this.
 #
-# To enquire about "Umalut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
+# To enquire about "Umlaut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
 
 mapper = dict(
     a=["à", "á", "â", "ä", "æ", "ã", "ā"],
