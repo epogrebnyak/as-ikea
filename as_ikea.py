@@ -7,7 +7,11 @@ import random
 
 # EP: note this is a very rich mapper, will convert every letter to
 # something Swedish, this may not be the result you want as
-# some names look cool with just one accented letter, n tmany letters like this.
+# some names look cool with just one accented letter, not many letters
+# like this.
+#
+# To enquire about "Umalut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
+
 mapper = dict(
     a=["à", "á", "â", "ä", "æ", "ã", "ā"],
     o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
@@ -46,24 +50,26 @@ def replace_once(string: str, new_letter: str, index: int) -> str:
     """
     return string[:index] + new_letter + string[index + 1 :]
 
+
 if __name__ == "__main__":
     print(as_ikea("Abelev"))
 
-# Change next:
-#  - can you write a pseudocode for this procedure?
-#  - add more tests that fail
-#  - should there be just one letter change?
-#  - inquire about "Umalut". Is our substitute algorith ok?
-#    https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
-#  - what about "å"?
-#  - does code need more refactoring?
-
 # Possible more serious applications:
 #  - how we can get real array of Ikea products?
-#  - can we make a properly sounding generative model for the products?
 #  - does product naming affect market success? See eg https://www.esic.edu/documentos/revistas/esicmk/1574698527_I.pdf
 #  - is there A/B test evidence for this that?
 
-# Ideas on implementation:
+# Can the name be taken for Swedesh?
+#  - can we make a properly sounding generative model for the products?
+#  - can we calculate the likelyhood it is Swedish?
+#  - what should be the probabilities of changing the letter (maybe due to position)?
+
+# Ideas on web implementation:
 #  - FastAPI for API
 #  - something like Heroku for quick launch as a web service?
+
+# For initial task (done):
+#  - can you write a pseudocode for this procedure?
+#  - add more tests that fail
+#  - should there be just one letter change?
+#  - does code need more refactoring?

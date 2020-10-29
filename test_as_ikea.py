@@ -1,5 +1,6 @@
 from as_ikea import as_ikea, mapper
 
+
 def test_abelev():
     ikea_name = as_ikea("Abelev")
     assert ikea_name.startswith("V")
