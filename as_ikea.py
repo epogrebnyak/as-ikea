@@ -6,20 +6,27 @@ As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 import random
 
 
+def substitute(letter: str) -> str:
+    mapper = dict(a=["à", "á", "â", "ä", "æ", "ã", "ā"],
+                  o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
+                  u=["û", "ü", "ù", "ú", "ū"],
+                  e=["è", "é", "ê", "ë", "ē", "ė"])
+    return random.choice(mapper[letter])
+    
+
 def as_ikea(name: str) -> str:
     """
     Convert letters to ikea letters
     :param: string
     :return: ikea string
     """
-    mapper = dict(a=["à", "á", "â", "ä", "æ", "ã", "ā"],
-                  o=["ô", "ö", "ò", "ó", "œ", "ø", "ō"],
-                  u=["û", "ü", "ù", "ú", "ū"],
-                  e=["è", "é", "ê", "ë", "ē", "ė"])
-
     for index, letter in enumerate(name.lower(), start=0):
-        if mapper.get(letter):
-            name = replacer(name, random.choice(mapper[letter]), index)
+       try:
+          new_letter = substitute(letter) 
+          name = replacer(name, new_letter, index)
+       except KeyError:
+          pass 
+           
 
     return name[::-1].title()
 
@@ -38,7 +45,7 @@ def replacer(s: str, newstring: str, index: int, nofail: bool = False) -> str:
     return s[:index] + newstring + s[index + 1:]
 
 
-#assert as_ikea("Ivanov") == 'Vönävi'
+# assert as_ikea("Ivanov") == 'Vönävi'
 
 if __name__ == "__main__":
     print(as_ikea('Abelev'))
