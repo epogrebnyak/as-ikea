@@ -4,6 +4,7 @@ As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 """
 
 import random
+from typing import List
 
 # EP: note this is a very rich mapper, will convert every letter to
 # something Swedish, this may not be the result you want as
@@ -31,24 +32,35 @@ def reverse(s):
     return s[::-1]
 
 
+def positions(name, mapper=mapper) -> List[int]:
+    pos = []
+    targets = mapper.keys()
+    for i, letter in enumerate(name.lower()):
+        if letter in targets:
+            pos.append(i)
+    return pos        
+            
 def as_ikea(name: str) -> str:
     """
     Convert *name* to Ikea-like name.
     """
-    for index, letter in enumerate(name.lower(), start=0):
-        try:
-            new_letter = substitute(letter)
-            name = replace_once(name, new_letter, index)
-        except KeyError:
-            pass
+    # Replace just once
+    index = random.choice(positions(name))
+    name = replace_at(name, index)
     return reverse(name).title()
 
 
-def replace_once(string: str, new_letter: str, index: int) -> str:
+def replace_at(name, index):
+    new_letter = substitute(name[index])
+    return replace_once(name, new_letter, index)
+
+
+def replace_once(xs: str, x: str, i: int) -> str:
     """
-    Insert *new_letter* at position *index* in *string*.
+    Insert *x* at position *i* in *xs*.
     """
-    return string[:index] + new_letter + string[index + 1 :]
+    assert len(x) == 1
+    return xs[:i] + x + xs[i + 1 :]
 
 
 if __name__ == "__main__":
