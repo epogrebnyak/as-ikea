@@ -1,9 +1,10 @@
-import random
-
 """Make your last name sound as an Ikea product.
 
 As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 """
+
+import random
+
 
 def as_ikea(name: str) -> str:
     """
