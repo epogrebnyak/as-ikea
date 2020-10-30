@@ -46,6 +46,7 @@ def as_ikea(name: str) -> str:
     Convert *name* to Ikea-like name.
     """
     # Replace just once
+    name=name.lower()
     index = random.choice(positions(name))
     name = replace_at(name, index)
     return reverse(name).title()
