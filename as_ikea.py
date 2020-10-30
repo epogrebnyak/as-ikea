@@ -38,8 +38,9 @@ def positions(name, mapper=mapper) -> List[int]:
     for i, letter in enumerate(name.lower()):
         if letter in targets:
             pos.append(i)
-    return pos        
-            
+    return pos
+
+
 def as_ikea(name: str) -> str:
     """
     Convert *name* to Ikea-like name.
