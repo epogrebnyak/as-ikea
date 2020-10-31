@@ -12,7 +12,7 @@ from transliterate import translit, get_available_language_codes, detect_languag
 # some names look cool with just one accented letter, not many letters
 # like this.
 #
-# To enquire about "Umalut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
+# To enquire about "Umlaut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
 
 mapper = dict(
     a=["à", "á", "â", "ä", "æ", "ã", "ā"],
@@ -47,8 +47,9 @@ def as_ikea(name: str) -> str:
     Convert *name* to Ikea-like name.
     """
     # Replace just once
+    name = name.lower()
     index = random.choice(positions(name))
-    name = replace_at(name.lower(), index)
+    name = replace_at(name, index)
     return reverse(name).title()
 
 
@@ -65,7 +66,7 @@ def replace_once(xs: str, x: str, i: int) -> str:
     return xs[:i] + x + xs[i + 1:]
 
 
-def islatin(s: str) -> bool:
+def is_latin(s: str) -> bool:
     try:
         s.encode(encoding='utf-8').decode('ascii')
     except UnicodeDecodeError:
@@ -74,22 +75,22 @@ def islatin(s: str) -> bool:
         return True
 
 
-def tolatin(s: str) -> str:
-    return translit(u'{}'.format(s), detectlang(s), reversed=True)
+def to_latin(s: str) -> str:
+    return translit(u'{}'.format(s), detect_lang(s), reversed=True)
 
 
-def istranslit(s: str) -> bool:
-    return detectlang(s) in get_available_language_codes()
+def is_translit(s: str) -> bool:
+    return detect_lang(s) in get_available_language_codes()
 
 
-def detectlang(s: str) -> str:
+def detect_lang(s: str) -> str:
     return detect_language(u'{}'.format(s))
 
 
 if __name__ == "__main__":
     lastname = "Абелев"
-    if not islatin(lastname):
-        lastname = tolatin(lastname)
+    if not is_latin(lastname):
+        lastname = to_latin(lastname)
 
     print(as_ikea(lastname))
 
