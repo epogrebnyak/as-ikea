@@ -5,6 +5,7 @@ As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 
 import random
 from typing import List
+from transliterate import translit, get_available_language_codes, detect_language
 
 # EP: note this is a very rich mapper, will convert every letter to
 # something Swedish, this may not be the result you want as
@@ -46,7 +47,7 @@ def as_ikea(name: str) -> str:
     Convert *name* to Ikea-like name.
     """
     # Replace just once
-    name=name.lower()
+    name = name.lower()
     index = random.choice(positions(name))
     name = replace_at(name, index)
     return reverse(name).title()
@@ -62,11 +63,36 @@ def replace_once(xs: str, x: str, i: int) -> str:
     Insert *x* at position *i* in *xs*.
     """
     assert len(x) == 1
-    return xs[:i] + x + xs[i + 1 :]
+    return xs[:i] + x + xs[i + 1:]
+
+
+def is_latin(s: str) -> bool:
+    try:
+        s.encode(encoding='utf-8').decode('ascii')
+    except UnicodeDecodeError:
+        return False
+    else:
+        return True
+
+
+def to_latin(s: str) -> str:
+    return translit(u'{}'.format(s), detect_lang(s), reversed=True)
+
+
+def is_translit(s: str) -> bool:
+    return detect_lang(s) in get_available_language_codes()
+
+
+def detect_lang(s: str) -> str:
+    return detect_language(u'{}'.format(s))
 
 
 if __name__ == "__main__":
-    print(as_ikea("Abelev"))
+    lastname = "Абелев"
+    if not is_latin(lastname):
+        lastname = to_latin(lastname)
+
+    print(as_ikea(lastname))
 
 # Possible more serious applications:
 #  - how we can get real array of Ikea products?
