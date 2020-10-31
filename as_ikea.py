@@ -5,13 +5,14 @@ As seen in https://www.facebook.com/max.abelev/posts/3347430315294332
 
 import random
 from typing import List
+from transliterate import translit, get_available_language_codes, detect_language
 
 # EP: note this is a very rich mapper, will convert every letter to
 # something Swedish, this may not be the result you want as
 # some names look cool with just one accented letter, not many letters
 # like this.
 #
-# To enquire about "Umlaut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
+# To enquire about "Umalut" see https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BB%D0%B0%D1%83%D1%82
 
 mapper = dict(
     a=["à", "á", "â", "ä", "æ", "ã", "ā"],
@@ -46,9 +47,8 @@ def as_ikea(name: str) -> str:
     Convert *name* to Ikea-like name.
     """
     # Replace just once
-    name=name.lower()
     index = random.choice(positions(name))
-    name = replace_at(name, index)
+    name = replace_at(name.lower(), index)
     return reverse(name).title()
 
 
@@ -62,11 +62,36 @@ def replace_once(xs: str, x: str, i: int) -> str:
     Insert *x* at position *i* in *xs*.
     """
     assert len(x) == 1
-    return xs[:i] + x + xs[i + 1 :]
+    return xs[:i] + x + xs[i + 1:]
+
+
+def islatin(s: str) -> bool:
+    try:
+        s.encode(encoding='utf-8').decode('ascii')
+    except UnicodeDecodeError:
+        return False
+    else:
+        return True
+
+
+def tolatin(s: str) -> str:
+    return translit(u'{}'.format(s), detectlang(s), reversed=True)
+
+
+def istranslit(s: str) -> bool:
+    return detectlang(s) in get_available_language_codes()
+
+
+def detectlang(s: str) -> str:
+    return detect_language(u'{}'.format(s))
 
 
 if __name__ == "__main__":
-    print(as_ikea("Abelev"))
+    lastname = "Абелев"
+    if not islatin(lastname):
+        lastname = tolatin(lastname)
+
+    print(as_ikea(lastname))
 
 # Possible more serious applications:
 #  - how we can get real array of Ikea products?
